@@ -43,8 +43,8 @@ export function useKakshaStore() {
   const [doubts, setDoubtsState] = useState<StudentDoubt[]>([
     {
       id: 'doubt-1',
-      studentId: 'student-aryan',
-      studentName: 'Aryan Verma',
+      studentId: 'student-vedanshi',
+      studentName: 'Vedanshi Puwar',
       questionText: 'How does backpropagation route gradients through a Max Pooling layer if pooling has no weights?',
       identifiedConcepts: ['Backpropagation', 'Max Pooling Argmax Mask', 'Gradient Routing'],
       relevantLecture: 'Convolutional Neural Networks (Slide 8 & 12)',
@@ -214,8 +214,8 @@ export function useKakshaStore() {
         avatarBg: 'bg-[#881337]',
       },
       {
-        id: 'user-aryan',
-        name: 'Aryan Verma',
+        id: 'user-vedanshi',
+        name: 'Vedanshi Puwar',
         role: 'STUDENT',
         isAudioOn: false,
         isVideoOn: true,
@@ -266,10 +266,10 @@ export function useKakshaStore() {
       },
       {
         id: 'chat-2',
-        senderId: 'user-aryan',
-        senderName: 'Aryan Verma',
+        senderId: 'user-vedanshi',
+        senderName: 'Vedanshi Puwar',
         senderRole: 'STUDENT',
-        text: 'Good morning Professor! Audio and slides are crystal clear.',
+        text: 'Good morning Professor Yerpude! Audio and slides are crystal clear.',
         timestamp: '10:01 AM',
       },
       {

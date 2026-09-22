@@ -54,7 +54,7 @@ export const DoubtSolver: React.FC<DoubtSolverProps> = ({
       console.error('Error resolving doubt:', err);
       const fallbackDoubt: StudentDoubt = {
         id: `doubt-${Date.now()}`,
-        studentId: 'student-aryan',
+        studentId: 'student-vedanshi',
         studentName,
         questionText: query,
         identifiedConcepts: pack.teacherBrief.coreConcepts.slice(0, 3),

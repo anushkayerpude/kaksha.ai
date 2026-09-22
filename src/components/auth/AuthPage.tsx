@@ -87,9 +87,9 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticate }) => {
 
       // Local / Offline fallback credentials
       const fallbackUser: UserProfile = {
-        id: loginRole === 'STAFF' ? 'FAC-YERPUDE' : '2024CS-ARYAN',
-        name: username.split('@')[0] || (loginRole === 'STAFF' ? 'Dr. Anushka Yerpude' : 'Aryan Verma'),
-        email: username || (loginRole === 'STAFF' ? 'a.yerpude@iar.ac.in' : 'aryan.v@iar.ac.in'),
+        id: loginRole === 'STAFF' ? 'FAC-YERPUDE' : '2024CS-VEDANSHI',
+        name: username.split('@')[0] || (loginRole === 'STAFF' ? 'Dr. Anushka Yerpude' : 'Vedanshi Puwar'),
+        email: username || (loginRole === 'STAFF' ? 'a.yerpude@iar.ac.in' : 'vedanshi.p@iar.ac.in'),
         role: loginRole,
         institution: 'Institute of Advanced Research',
         department: loginRole === 'STAFF' ? 'Department of Computer Science & AI' : 'B.Tech AI & Data Science',
@@ -161,7 +161,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticate }) => {
       const passToUse = studentPassword || 'kaksha123';
       try {
         const fbUser = await registerWithEmail(emailToUse, passToUse, {
-          name: studentName || 'Aryan Verma',
+          name: studentName || 'Vedanshi Puwar',
           role: 'STUDENT',
           department: studentProgram,
           enrollmentOrStaffId: studentEnrollment,
@@ -176,7 +176,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticate }) => {
 
       const newStudentUser: UserProfile = {
         id: studentEnrollment || `2024CS${Date.now().toString().slice(-4)}`,
-        name: studentName || 'Aryan Verma',
+        name: studentName || 'Vedanshi Puwar',
         email: studentEmail || 'student@iar.ac.in',
         role: 'STUDENT',
         institution: 'Institute of Advanced Research',
@@ -774,7 +774,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticate }) => {
                       required
                       value={studentName}
                       onChange={(e) => setStudentName(e.target.value)}
-                      placeholder="e.g. Aryan Verma"
+                      placeholder="e.g. Vedanshi Puwar"
                       className="w-full px-3 py-2 rounded-lg bg-white border border-[#d4cbbe] text-slate-900 text-xs focus:outline-none focus:border-[#0d9488]"
                     />
                   </div>
@@ -789,7 +789,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticate }) => {
                     required
                     value={studentEmail}
                     onChange={(e) => setStudentEmail(e.target.value)}
-                    placeholder="aryan.v@student.iar.ac.in"
+                    placeholder="vedanshi.p@student.iar.ac.in"
                     className="w-full px-3 py-2 rounded-lg bg-white border border-[#d4cbbe] text-slate-900 text-xs focus:outline-none focus:border-[#0d9488]"
                   />
                 </div>
@@ -943,7 +943,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticate }) => {
                 onClick={() => handleQuickLogin('STUDENT')}
                 className="px-2.5 py-1.5 rounded-lg bg-white border border-amber-300 hover:border-amber-400 font-bold text-slate-800 text-[11px] text-center shadow-xs transition-all hover:bg-amber-100/50 flex items-center justify-center gap-1"
               >
-                <span>👨‍🎓 Aryan Verma (Student)</span>
+                <span>👩‍🎓 Vedanshi Puwar (Student)</span>
               </button>
             </div>
           </div>

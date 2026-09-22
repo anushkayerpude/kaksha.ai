@@ -477,7 +477,7 @@ export async function solveStudentDoubt(
 
     return {
       id: `doubt-${Date.now()}`,
-      studentId: 'student-aryan',
+      studentId: 'student-vedanshi',
       studentName,
       questionText,
       identifiedConcepts: concepts,
@@ -530,7 +530,7 @@ ANSWER:
 
     return {
       id: `doubt-${Date.now()}`,
-      studentId: 'student-aryan',
+      studentId: 'student-vedanshi',
       studentName,
       questionText,
       identifiedConcepts: concepts,
@@ -543,7 +543,7 @@ ANSWER:
     console.error('Error in solveStudentDoubt:', error);
     return {
       id: `doubt-${Date.now()}`,
-      studentId: 'student-aryan',
+      studentId: 'student-vedanshi',
       studentName,
       questionText,
       identifiedConcepts: pack.teacherBrief.coreConcepts.slice(0, 3),

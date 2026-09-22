@@ -11,13 +11,13 @@ export const mockUsers: UserProfile[] = [
     avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=250',
   },
   {
-    id: 'student-aryan',
-    name: 'Aryan Verma',
-    email: 'aryan.v@student.kaksha.ac.in',
+    id: 'student-vedanshi',
+    name: 'Vedanshi Puwar',
+    email: 'vedanshi.p@student.kaksha.ac.in',
     role: 'STUDENT',
     institution: 'Apex Institute of Technology',
     department: 'B.Tech AI & Data Science (Sem 5)',
-    avatarUrl: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=250',
+    avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=250',
   },
 ];
 
