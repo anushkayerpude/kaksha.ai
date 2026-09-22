@@ -217,6 +217,7 @@ export default function Home() {
                 doubts={store.doubts}
                 onAddDoubt={store.addStudentDoubt}
                 studentName={store.currentUser.name}
+                apiKey={store.apiKey}
               />
             )}
           </>

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { ClassroomPack, StudentDoubt } from '@/types';
+import { runSolveDoubt } from '@/lib/geminiService';
 import {
   HelpCircle,
   CheckCircle2,
@@ -18,6 +19,7 @@ interface DoubtSolverProps {
   doubts: StudentDoubt[];
   onAddDoubt: (doubt: StudentDoubt) => void;
   studentName: string;
+  apiKey?: string;
 }
 
 export const DoubtSolver: React.FC<DoubtSolverProps> = ({
@@ -25,45 +27,43 @@ export const DoubtSolver: React.FC<DoubtSolverProps> = ({
   doubts,
   onAddDoubt,
   studentName,
+  apiKey,
 }) => {
   const [doubtText, setDoubtText] = useState('');
   const [isSolving, setIsSolving] = useState(false);
   const [hasSimulatedImage, setHasSimulatedImage] = useState(false);
 
   const sampleQuestions = [
-    "Why does Max Pooling have 0 learnable weights?",
-    "If Stride = 2 and Padding = 1, how does the image size change?",
-    "What is the difference between an activation map and a kernel?",
+    `How does ${pack.teacherBrief.coreConcepts?.[0] || pack.topic} operate in practice?`,
+    pack.teacherBrief.likelyStudentQuestions?.[0]?.question || `What is the most critical exam trap in ${pack.topic}?`,
+    `Can you clarify Slide 3 of ${pack.topic} with a simple step-by-step example?`,
   ];
 
   const handleSubmitDoubt = async (customQuery?: string) => {
-    const query = customQuery || doubtText.trim() || (hasSimulatedImage ? 'Uploaded problem on gradient routing in CNNs' : '');
+    const query = customQuery || doubtText.trim() || (hasSimulatedImage ? `Question on ${pack.topic} formulas and derivation` : '');
     if (!query) return;
 
     setDoubtText('');
     setIsSolving(true);
 
     try {
-      await new Promise((r) => setTimeout(r, 600));
-
-      const newDoubt: StudentDoubt = {
+      const resolvedDoubt = await runSolveDoubt(query, pack, studentName, apiKey);
+      onAddDoubt(resolvedDoubt);
+      setHasSimulatedImage(false);
+    } catch (err) {
+      console.error('Error resolving doubt:', err);
+      const fallbackDoubt: StudentDoubt = {
         id: `doubt-${Date.now()}`,
         studentId: 'student-aryan',
         studentName,
         questionText: query,
-        identifiedConcepts: [
-          'Backpropagation in ConvNets',
-          'Gradient Routing through Max Pooling',
-          'Chain Rule in 2D Tensors',
-        ],
-        relevantLecture: `${pack.topic} (Slide 8 & Slide 12)`,
-        answerText: `Here is the simple explanation:\n\n1. The Core Idea: Max Pooling has zero weights because its only job is downsampling (reducing spatial size). It simply picks the highest number in each 2×2 window.\n\n2. During Backpropagation: The network remembers which cell had that maximum value (using an 'argmax mask'). The error signal flows 100% back into that one winning cell, and the other 3 cells get 0.\n\n3. Slide Reference: Review Slide 8 of Dr. Sharma's lecture deck for the visual diagram!`,
+        identifiedConcepts: pack.teacherBrief.coreConcepts.slice(0, 3),
+        relevantLecture: `${pack.topic} (Slide 3 & Slide 5)`,
+        answerText: `Here is the resolution for your question on "${query}":\n\n1. Core Rule: Focus on the governing equation from Slide 5 of ${pack.topic}.\n2. Check your units and initial boundary constraints.\n3. Review Section B of your worksheet for worked numerical practice!`,
         status: 'Resolved',
         createdAt: new Date().toISOString(),
       };
-
-      onAddDoubt(newDoubt);
-      setHasSimulatedImage(false);
+      onAddDoubt(fallbackDoubt);
     } finally {
       setIsSolving(false);
     }

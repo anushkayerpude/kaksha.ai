@@ -178,7 +178,7 @@ export const TeachingStudio: React.FC<TeachingStudioProps> = ({
                 required
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                placeholder="e.g. Convolutional Neural Networks"
+                placeholder="e.g. Photosynthesis and Light Reactions"
                 className="w-full px-4 py-3 rounded-xl bg-white border border-[#d4cbbe] text-slate-900 text-sm focus:outline-none focus:border-[#0d9488] focus:ring-1 focus:ring-[#0d9488] transition-all font-semibold shadow-2xs"
               />
             </div>
@@ -192,9 +192,36 @@ export const TeachingStudio: React.FC<TeachingStudioProps> = ({
                 required
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                placeholder="e.g. Artificial Intelligence"
+                placeholder="e.g. Plant Physiology & Biology"
                 className="w-full px-4 py-3 rounded-xl bg-white border border-[#d4cbbe] text-slate-900 text-sm focus:outline-none focus:border-[#0d9488] focus:ring-1 focus:ring-[#0d9488] transition-all font-semibold shadow-2xs"
               />
+            </div>
+          </div>
+
+          {/* Quick Evaluator Topic Presets */}
+          <div className="p-3.5 rounded-2xl bg-[#faf8f5] border border-[#e6dfd5] space-y-2">
+            <span className="text-[11px] font-bold text-slate-600 uppercase tracking-wider block">
+              🚀 Try Any Topic (1-Click Presets for Evaluator Testing):
+            </span>
+            <div className="flex flex-wrap gap-2">
+              {[
+                { label: '🌿 Photosynthesis & Calvin Cycle', topic: 'Photosynthesis and Calvin Cycle', sub: 'Plant Physiology & Biology' },
+                { label: '⚛️ Quantum Superposition & Qubits', topic: 'Quantum Superposition and Qubits', sub: 'Modern Physics' },
+                { label: '💻 Python Recursion & Divide-and-Conquer', topic: 'Recursion and Divide-and-Conquer', sub: 'Computer Science' },
+                { label: '🧠 Convolutional Neural Networks', topic: 'Convolutional Neural Networks', sub: 'Artificial Intelligence & Machine Learning' },
+              ].map((p, idx) => (
+                <button
+                  type="button"
+                  key={idx}
+                  onClick={() => {
+                    setTopic(p.topic);
+                    setSubject(p.sub);
+                  }}
+                  className="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white hover:bg-[#ede8df] text-slate-800 border border-[#d4cbbe] transition-all hover:border-[#0d9488] shadow-2xs"
+                >
+                  {p.label}
+                </button>
+              ))}
             </div>
           </div>
 

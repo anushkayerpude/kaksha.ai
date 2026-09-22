@@ -121,7 +121,7 @@ export const StudentAITutor: React.FC<StudentAITutorProps> = ({
         {
           id: `bot-${Date.now()}`,
           role: 'assistant',
-          text: `In today's lecture, Dr. Sharma explained that 2D convolution acts like a sliding filter. Review Slide 5 and the Sizing Formula: Output = floor((W - K + 2P)/S) + 1!`,
+          text: `In today's lecture on ${pack.topic}, remember the core focus: ${pack.teacherBrief.coreConcepts?.[0] || 'fundamental principles'}. Review Slide 5 and Section B of your worksheet for worked examples!`,
           mode,
         },
       ]);
@@ -185,11 +185,11 @@ export const StudentAITutor: React.FC<StudentAITutorProps> = ({
       <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs">
         <span className="text-slate-500 shrink-0 font-bold">Quick prompts:</span>
         {[
-          "Why do we need CNNs instead of normal neural networks?",
-          "Can you explain the output size formula with an example?",
-          "What is the difference between convolution and pooling?",
-          "What is the most common mistake students make on exams?",
-          "Show me simple PyTorch code for 1 Conv layer",
+          `Explain ${pack.topic} with a simple real-life story`,
+          `What is the most common exam trap in ${pack.topic}?`,
+          `Can you break down ${pack.teacherBrief.coreConcepts?.[0] || 'the core concept'} step-by-step?`,
+          `Show me practical code or calculation for ${pack.topic}`,
+          `Give me a memorable memory trick for this lecture`,
         ].map((q, i) => (
           <button
             key={i}

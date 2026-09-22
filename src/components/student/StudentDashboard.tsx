@@ -102,10 +102,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               <span className="w-6 h-6 rounded-full bg-[#0d9488]/10 text-[#0d9488] flex items-center justify-center text-xs font-black">
                 1
               </span>
-              The Problem with Regular Networks
+              The Problem We Are Solving
             </div>
             <p className="text-slate-600 text-xs leading-relaxed">
-              If an image is 1000×1000 pixels, a regular neural network needs 3 million connections for just one layer! That crashes computers and forgets which pixels are next to each other.
+              {activePack.presentation?.[1]?.bulletPoints?.[0] ||
+                `Classical approaches struggle when scaling ${activePack.topic}. We need a systematic, optimized architecture.`}
             </p>
           </div>
 
@@ -114,10 +115,12 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               <span className="w-6 h-6 rounded-full bg-[#0d9488]/10 text-[#0d9488] flex items-center justify-center text-xs font-black">
                 2
               </span>
-              The CNN Solution: Sliding Filter
+              The Breakthrough Solution
             </div>
             <p className="text-slate-600 text-xs leading-relaxed">
-              Instead of looking at the whole photo at once, a CNN slides a tiny magnifying glass (like a 3×3 or 5×5 window called a <strong>Kernel</strong>) over the photo to spot local patterns like edges and textures.
+              {activePack.teacherBrief?.realWorldAnalogies?.[0]
+                ? `Think of it like ${activePack.teacherBrief.realWorldAnalogies[0].analogy}: ${activePack.teacherBrief.realWorldAnalogies[0].explanation}`
+                : `Key principle: ${activePack.teacherBrief?.coreConcepts?.[0] || activePack.topic}. Breaks complexity down into stable local operations.`}
             </p>
           </div>
 
@@ -126,10 +129,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               <span className="w-6 h-6 rounded-full bg-[#0d9488]/10 text-[#0d9488] flex items-center justify-center text-xs font-black">
                 3
               </span>
-              From Edges to Full Objects
+              From Foundations to Real World
             </div>
             <p className="text-slate-600 text-xs leading-relaxed">
-              Early layers detect edges → middle layers detect eyes, ears, and corners → deeper layers recognize the full face or car! It works just like human vision.
+              {activePack.presentation?.[10]?.bulletPoints?.[0] ||
+                `By stacking ${activePack.teacherBrief?.coreConcepts?.[1] || 'governing principles'}, systems achieve high-throughput real-world reliability.`}
             </p>
           </div>
         </div>
@@ -326,31 +330,19 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
         <div className="flex items-center gap-2">
           <AlertCircle className="w-5 h-5 text-amber-600" />
           <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">
-            3 Common Exam Traps to Avoid
+            3 Common Exam Traps & Misconceptions to Avoid
           </h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-          <div className="p-3.5 rounded-xl bg-amber-50/60 border border-amber-200/80 space-y-1">
-            <p className="font-bold text-amber-950">❌ Trap 1: Pooling has weights</p>
-            <p className="text-slate-700">
-              <strong>Truth:</strong> Max Pooling has ZERO weights to learn! It just picks the biggest number in each 2×2 window.
-            </p>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-amber-50/60 border border-amber-200/80 space-y-1">
-            <p className="font-bold text-amber-950">❌ Trap 2: Stride increases size</p>
-            <p className="text-slate-700">
-              <strong>Truth:</strong> Larger stride jumps across pixels, making the output smaller, not bigger!
-            </p>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-amber-50/60 border border-amber-200/80 space-y-1">
-            <p className="font-bold text-amber-950">❌ Trap 3: Kernels learn alone</p>
-            <p className="text-slate-700">
-              <strong>Truth:</strong> The weights inside the filter are shared across the whole image (Weight Sharing).
-            </p>
-          </div>
+          {activePack.misconceptions.slice(0, 3).map((misc, idx) => (
+            <div key={misc.id || idx} className="p-3.5 rounded-xl bg-amber-50/60 border border-amber-200/80 space-y-1">
+              <p className="font-bold text-amber-950">❌ Trap {idx + 1}: &quot;{misc.belief.slice(0, 60)}...&quot;</p>
+              <p className="text-slate-700">
+                <strong>Truth:</strong> {misc.clarification}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

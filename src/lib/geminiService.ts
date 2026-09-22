@@ -2,13 +2,14 @@ import {
   researchTopicWithSearch,
   generateClassroomPackWithGemini,
   askStudentAITutor,
+  solveStudentDoubt,
   regeneratePackComponent,
 } from './gemini';
-import { ClassroomPack, LectureInput, ResearchPack } from '@/types';
+import { ClassroomPack, LectureInput, ResearchPack, StudentDoubt } from '@/types';
 
 /**
  * Universal Gemini Service for Kaksha.ai
- * Seamlessly executes direct client-side Gemini 3.8 Flash SDK + verified grounding packs for Firebase Hosting.
+ * Seamlessly executes direct client-side Gemini 2.5 Flash SDK + dynamic grounding packs for Firebase Hosting.
  */
 
 export async function runResearch(
@@ -37,6 +38,15 @@ export async function runAskTutor(
   return await askStudentAITutor(query, lecturePack, mode as any, apiKey);
 }
 
+export async function runSolveDoubt(
+  question: string,
+  pack: ClassroomPack,
+  studentName: string,
+  apiKey?: string
+): Promise<StudentDoubt> {
+  return await solveStudentDoubt(question, pack, studentName, apiKey);
+}
+
 export async function runRegenerate(
   componentType: string,
   currentContent: any,
@@ -45,3 +55,4 @@ export async function runRegenerate(
 ): Promise<any> {
   return await regeneratePackComponent(componentType as any, instructions, currentContent, apiKey);
 }
+
