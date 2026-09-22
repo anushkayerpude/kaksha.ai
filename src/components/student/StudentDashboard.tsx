@@ -56,7 +56,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 LIVE ONLINE NOW
               </span>
               <h3 className="text-base sm:text-lg font-black mt-1">
-                Dr. Ananya Sharma is conducting an Online Class on &quot;{activePack.topic}&quot;!
+                Dr. Anushka Yerpude is conducting an Online Class on &quot;{activePack.topic}&quot;!
               </h3>
               <p className="text-xs text-white/80">
                 Join now for live synchronized slides, in-class polling, and instant AI Co-Host assistance.
@@ -86,7 +86,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
               👋 Hey {student.name.split(' ')[0]}! Ready for Today&apos;s Class?
             </h1>
             <p className="text-xs sm:text-sm text-white/90 max-w-xl leading-relaxed">
-              Dr. Rajesh Sharma published the complete lecture package for{' '}
+              Dr. Anushka Yerpude published the complete lecture package for{' '}
               <span className="text-amber-200 font-bold underline decoration-amber-300/60 underline-offset-2">
                 {activePack.topic}
               </span>
@@ -201,7 +201,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
                 Browse Class Slides & Notes
               </h4>
               <p className="text-xs text-slate-600 leading-relaxed">
-                Check the 13 slides with diagrams, visual filters, and real-world analogies taught by Dr. Sharma.
+                Check the 13 slides with diagrams, visual filters, and real-world analogies taught by Dr. Yerpude.
               </p>
             </div>
             <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-600 pt-2 border-t border-[#f0eae0]">

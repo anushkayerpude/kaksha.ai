@@ -50,7 +50,7 @@ Teachers spend **10 to 15 hours every week** manually scouting research papers, 
 - **Split-Screen Authentication**: Campus academic block photography on the left with university accreditation badges; institutional GNUMS authentication card on the right.
 - **Faculty Onboarding**: Dedicated staff registration with Staff Code / Emp ID, academic department, academic title (Dr./Prof.), and faculty certification.
 - **Student Enrollment**: Student registration with University Enrollment Number / PRN, degree program, and semester selection.
-- **1-Click Evaluator Personas**: Pre-configured demo logins for **Dr. Ananya Sharma** (Faculty) and **Aryan Verma** (Student) for instant evaluation.
+- **1-Click Evaluator Personas**: Pre-configured demo logins for **Dr. Anushka Yerpude** (Faculty) and **Aryan Verma** (Student) for instant evaluation.
 
 ---
 
@@ -157,7 +157,7 @@ graph TD
         HTMLPrint["Print-Ready CSS Sheets"]
     end
 
-    Landing -->|Dr. Sharma Login| StaffPortal
+    Landing -->|Dr. Yerpude Login| StaffPortal
     Landing -->|Aryan Verma Login| StudentPortal
 
     StaffPortal --> ResearchFn
@@ -238,7 +238,7 @@ You can test the entire platform using 1-click login buttons on the landing page
 
 | Persona | Role | Username / ID | Password | Key Feature To Test |
 |---|---|---|---|---|
-| **Dr. Ananya Sharma** | Faculty / Staff | `FAC-2024-8841` | `drsharma2024` | Teaching Studio, 13 Slides, Live Teleprompter Teach Mode, Google Exports |
+| **Dr. Anushka Yerpude** | Faculty / Staff | `FAC-2024-8841` | `dryerpude2024` | Teaching Studio, 13 Slides, Live Teleprompter Teach Mode, Google Exports |
 | **Aryan Verma** | Student (Sem 5) | `2024CS0182` | `student2024` | 30s Plain English, Interactive Formula Playground, 5-Q Quiz, AI Buddy |
 
 ---

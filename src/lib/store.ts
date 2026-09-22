@@ -204,8 +204,8 @@ export function useKakshaStore() {
   const startOnlineClass = (pack: ClassroomPack) => {
     const initialParticipants: OnlineParticipant[] = [
       {
-        id: 'user-sharma',
-        name: 'Dr. Ananya Sharma',
+        id: 'user-yerpude',
+        name: 'Dr. Anushka Yerpude',
         role: 'TEACHER',
         isAudioOn: true,
         isVideoOn: true,
@@ -258,8 +258,8 @@ export function useKakshaStore() {
     const initialMessages: LiveChatMessage[] = [
       {
         id: 'chat-1',
-        senderId: 'user-sharma',
-        senderName: 'Dr. Ananya Sharma',
+        senderId: 'user-yerpude',
+        senderName: 'Dr. Anushka Yerpude',
         senderRole: 'TEACHER',
         text: `Welcome everyone to our live online lecture on "${pack.topic}"! Please let me know in the chat if slides and audio are clear.`,
         timestamp: '10:00 AM',
@@ -287,7 +287,7 @@ export function useKakshaStore() {
       packId: pack.id,
       topic: pack.topic,
       subject: pack.subject,
-      teacherName: 'Dr. Ananya Sharma',
+      teacherName: 'Dr. Anushka Yerpude',
       isLive: true,
       startedAt: new Date().toISOString(),
       currentSlideIndex: 0,

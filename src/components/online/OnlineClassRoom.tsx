@@ -350,9 +350,9 @@ export const OnlineClassRoom: React.FC<OnlineClassRoomProps> = ({
                 /* Animated Professor Avatar Fallback */
                 <div className="w-full h-full flex flex-col items-center justify-center p-3 bg-gradient-to-b from-[#881337] to-[#4c0519] text-white">
                   <div className="w-12 h-12 rounded-full bg-white/20 border border-white/40 flex items-center justify-center font-bold text-lg mb-1 shadow-inner">
-                    AS
+                    AY
                   </div>
-                  <p className="text-xs font-bold truncate max-w-[140px]">Dr. Ananya Sharma</p>
+                  <p className="text-xs font-bold truncate max-w-[140px]">Dr. Anushka Yerpude</p>
                   <p className="text-[10px] text-amber-200">Instructor (Host)</p>
                   {/* Audio Waveform animation */}
                   <div className="flex items-center gap-1 mt-2">
@@ -366,7 +366,7 @@ export const OnlineClassRoom: React.FC<OnlineClassRoomProps> = ({
 
               {/* Status Banner */}
               <div className="absolute bottom-0 inset-x-0 p-1.5 bg-black/70 backdrop-blur-sm text-[10px] flex items-center justify-between font-bold text-white px-2.5">
-                <span className="truncate max-w-[120px]">Dr. Sharma</span>
+                <span className="truncate max-w-[120px]">Dr. Yerpude</span>
                 <span className="text-emerald-400">● Speaking</span>
               </div>
             </div>
@@ -655,7 +655,7 @@ export const OnlineClassRoom: React.FC<OnlineClassRoomProps> = ({
               {isTeacher && (
                 <div className="space-y-2 pt-2 border-t border-white/10">
                   <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                    Quick Poll Triggers for Dr. Sharma:
+                    Quick Poll Triggers for Dr. Yerpude:
                   </p>
                   <button
                     onClick={() =>
@@ -740,7 +740,7 @@ export const OnlineClassRoom: React.FC<OnlineClassRoomProps> = ({
         <div className="fixed bottom-20 left-6 z-40 w-96 p-5 rounded-3xl bg-slate-900 border border-amber-500/40 shadow-2xl space-y-2 text-slate-200 text-xs animate-fade-in">
           <div className="flex items-center justify-between">
             <span className="font-bold text-amber-400 uppercase text-[10px]">
-              Dr. Sharma&apos;s Presenter Notes (Slide {session.currentSlideIndex + 1})
+              Dr. Yerpude&apos;s Presenter Notes (Slide {session.currentSlideIndex + 1})
             </span>
             <button onClick={() => setShowNotesDrawer(false)} className="text-slate-400 hover:text-white">✕</button>
           </div>
@@ -789,7 +789,7 @@ export const OnlineClassRoom: React.FC<OnlineClassRoomProps> = ({
                 Auto-Generated Lecture Recap (Pushed to Absent Students):
               </p>
               <p className="text-slate-700 leading-relaxed">
-                &quot;In today&apos;s online class, Dr. Sharma covered {pack.topic} with emphasis on {pack.teacherBrief.coreConcepts[0]}. Students completed a live checkpoint poll with 85% mastery. Homework worksheet is available on the Student Desk.&quot;
+                &quot;In today&apos;s online class, Dr. Yerpude covered {pack.topic} with emphasis on {pack.teacherBrief.coreConcepts[0]}. Students completed a live checkpoint poll with 85% mastery. Homework worksheet is available on the Student Desk.&quot;
               </p>
             </div>
 

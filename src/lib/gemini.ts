@@ -397,7 +397,7 @@ export async function askStudentAITutor(
     const trap = brief.likelyStudentQuestions?.[0];
 
     if (mode === 'With Code') {
-      return `Here is a clear, runnable Python snippet illustrating the mechanics of **${topic}**:\n\n\`\`\`python\n# Implementation of ${topic}\n# Subject: ${lecturePack.subject}\n\ndef compute_${topic.toLowerCase().replace(/[^a-z0-9]/g, '_')}(inputs, parameters):\n    """Calculates state transformation according to lecture formula."""\n    print("Processing ${topic} step...")\n    # Primary transformation step\n    result = [x * 1.5 for x in inputs]\n    return result\n\n# Example run\nsample_data = [1, 2, 3, 4]\noutput = compute_${topic.toLowerCase().replace(/[^a-z0-9]/g, '_')}(sample_data, None)\nprint("Output state:", output)\n\`\`\`\n\nNotice how the data flows systematically through the transform. Review Slide 5 of Dr. Sharma's lecture for the exact mathematical boundaries!`;
+      return `Here is a clear, runnable Python snippet illustrating the mechanics of **${topic}**:\n\n\`\`\`python\n# Implementation of ${topic}\n# Subject: ${lecturePack.subject}\n\ndef compute_${topic.toLowerCase().replace(/[^a-z0-9]/g, '_')}(inputs, parameters):\n    """Calculates state transformation according to lecture formula."""\n    print("Processing ${topic} step...")\n    # Primary transformation step\n    result = [x * 1.5 for x in inputs]\n    return result\n\n# Example run\nsample_data = [1, 2, 3, 4]\noutput = compute_${topic.toLowerCase().replace(/[^a-z0-9]/g, '_')}(sample_data, None)\nprint("Output state:", output)\n\`\`\`\n\nNotice how the data flows systematically through the transform. Review Slide 5 of Dr. Yerpude's lecture for the exact mathematical boundaries!`;
     }
 
     if (mode === 'Real-World Example') {

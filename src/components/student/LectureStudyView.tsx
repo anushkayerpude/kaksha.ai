@@ -73,7 +73,7 @@ export const LectureStudyView: React.FC<LectureStudyViewProps> = ({
             {pack.topic}
           </h1>
           <p className="text-xs text-slate-500 mt-1">
-            {pack.subject} • Faculty: Dr. Rajesh Sharma • 13 Visual Slides
+            {pack.subject} • Faculty: Dr. Anushka Yerpude • 13 Visual Slides
           </p>
         </div>
 
@@ -285,7 +285,7 @@ export const LectureStudyView: React.FC<LectureStudyViewProps> = ({
               </div>
             </div>
 
-            {/* Real World Analogies from Dr. Sharma */}
+            {/* Real World Analogies from Dr. Yerpude */}
             <div className="p-5 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-2">
               <h4 className="text-xs font-bold text-amber-900 uppercase tracking-wider">
                 💡 Real-World Analogy: Flashlight on a Wall
@@ -309,7 +309,7 @@ export const LectureStudyView: React.FC<LectureStudyViewProps> = ({
             </div>
             <h3 className="text-xl font-bold text-slate-900">Practice Homework Worksheet</h3>
             <p className="text-xs text-slate-600 leading-relaxed">
-              Print or save the official homework worksheet prepared by Dr. Sharma. Contains Section A (Basic Sizing), Section B (Pooling & Receptive Fields), and Section C (Application Calculations).
+              Print or save the official homework worksheet prepared by Dr. Yerpude. Contains Section A (Basic Sizing), Section B (Pooling & Receptive Fields), and Section C (Application Calculations).
             </p>
             <button
               onClick={handlePrint}

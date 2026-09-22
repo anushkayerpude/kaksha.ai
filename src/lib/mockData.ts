@@ -2,9 +2,9 @@ import { ClassroomPack, ClassAnalytics, UserProfile } from '../types';
 
 export const mockUsers: UserProfile[] = [
   {
-    id: 'staff-prof-sharma',
-    name: 'Dr. Rajesh Sharma',
-    email: 'r.sharma@kaksha.ac.in',
+    id: 'staff-prof-yerpude',
+    name: 'Dr. Anushka Yerpude',
+    email: 'a.yerpude@kaksha.ac.in',
     role: 'STAFF',
     institution: 'Apex Institute of Technology',
     department: 'Department of Computer Science & AI',
@@ -281,7 +281,7 @@ export const demoClassroomPack: ClassroomPack = {
       subtitle: 'Spatial Hierarchies & Deep Computer Vision | Semester 5 AI & ML',
       bulletPoints: [
         'Apex Institute of Technology — Department of AI & Data Science',
-        'Instructor: Dr. Rajesh Sharma',
+        'Instructor: Dr. Anushka Yerpude',
         'Session Objective: Transform raw pixel grids into semantic object predictions',
         'Prerequisites: Linear Algebra, Multi-Layer Perceptrons, Gradient Descent',
       ],
@@ -877,8 +877,8 @@ export const demoClassroomPack: ClassroomPack = {
   ],
 
   googleExports: {
-    docsUrl: 'https://docs.google.com/document/d/1KakshaAI-CNN-LessonPlan-DrSharma/edit?usp=sharing',
-    slidesUrl: 'https://docs.google.com/presentation/d/1KakshaAI-CNN-PresentationDeck-DrSharma/edit?usp=sharing',
+    docsUrl: 'https://docs.google.com/document/d/1KakshaAI-CNN-LessonPlan-DrYerpude/edit?usp=sharing',
+    slidesUrl: 'https://docs.google.com/presentation/d/1KakshaAI-CNN-PresentationDeck-DrYerpude/edit?usp=sharing',
     formsUrl: 'https://docs.google.com/forms/d/e/1FAIpQLScKakshaAI-CNN-MasteryQuiz-Sem5/viewform',
     docsExportId: 'gdoc-cnn-48291',
     slidesExportId: 'gslides-cnn-19283',

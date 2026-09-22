@@ -87,9 +87,9 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticate }) => {
 
       // Local / Offline fallback credentials
       const fallbackUser: UserProfile = {
-        id: loginRole === 'STAFF' ? 'FAC-SHARMA' : '2024CS-ARYAN',
-        name: username.split('@')[0] || (loginRole === 'STAFF' ? 'Dr. Ananya Sharma' : 'Aryan Verma'),
-        email: username || (loginRole === 'STAFF' ? 'a.sharma@iar.ac.in' : 'aryan.v@iar.ac.in'),
+        id: loginRole === 'STAFF' ? 'FAC-YERPUDE' : '2024CS-ARYAN',
+        name: username.split('@')[0] || (loginRole === 'STAFF' ? 'Dr. Anushka Yerpude' : 'Aryan Verma'),
+        email: username || (loginRole === 'STAFF' ? 'a.yerpude@iar.ac.in' : 'aryan.v@iar.ac.in'),
         role: loginRole,
         institution: 'Institute of Advanced Research',
         department: loginRole === 'STAFF' ? 'Department of Computer Science & AI' : 'B.Tech AI & Data Science',
@@ -117,7 +117,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticate }) => {
       const passToUse = staffPassword || 'kaksha123';
       try {
         const fbUser = await registerWithEmail(emailToUse, passToUse, {
-          name: staffName ? `${staffTitle} ${staffName}` : `${staffTitle} Rajesh Sharma`,
+          name: staffName ? `${staffTitle} ${staffName}` : `${staffTitle} Anushka Yerpude`,
           role: 'STAFF',
           department: staffDepartment,
           enrollmentOrStaffId: staffId,
@@ -132,7 +132,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticate }) => {
 
       const newStaffUser: UserProfile = {
         id: staffId || `FAC-${Date.now().toString().slice(-4)}`,
-        name: staffName ? `${staffTitle} ${staffName}` : `${staffTitle} Rajesh Sharma`,
+        name: staffName ? `${staffTitle} ${staffName}` : `${staffTitle} Anushka Yerpude`,
         email: staffEmail || 'faculty@iar.ac.in',
         role: 'STAFF',
         institution: 'Institute of Advanced Research',
@@ -588,7 +588,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticate }) => {
                       required
                       value={staffName}
                       onChange={(e) => setStaffName(e.target.value)}
-                      placeholder="e.g. Rajesh Sharma"
+                      placeholder="e.g. Anushka Yerpude"
                       className="w-full px-3 py-2 rounded-lg bg-white border border-[#d4cbbe] text-slate-900 text-xs focus:outline-none focus:border-[#881337]"
                     />
                   </div>
@@ -635,7 +635,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticate }) => {
                     required
                     value={staffEmail}
                     onChange={(e) => setStaffEmail(e.target.value)}
-                    placeholder="r.sharma@iar.ac.in"
+                    placeholder="a.yerpude@iar.ac.in"
                     className="w-full px-3 py-2 rounded-lg bg-white border border-[#d4cbbe] text-slate-900 text-xs focus:outline-none focus:border-[#881337]"
                   />
                 </div>
@@ -936,7 +936,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticate }) => {
                 onClick={() => handleQuickLogin('STAFF')}
                 className="px-2.5 py-1.5 rounded-lg bg-white border border-amber-300 hover:border-amber-400 font-bold text-slate-800 text-[11px] text-center shadow-xs transition-all hover:bg-amber-100/50 flex items-center justify-center gap-1"
               >
-                <span>👨‍🏫 Dr. Sharma (Staff)</span>
+                <span>👨‍🏫 Dr. Yerpude (Staff)</span>
               </button>
               <button
                 type="button"

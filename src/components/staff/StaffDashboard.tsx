@@ -38,7 +38,7 @@ export const StaffDashboard: React.FC<StaffDashboardProps> = ({
               Faculty Portal • Semester 5 Session 2026
             </div>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
-              Good Morning, Professor Sharma
+              Good Morning, Professor Yerpude
             </h1>
             <p className="mt-1 text-sm text-white/90 max-w-xl">
               Your next lecture on <span className="text-amber-200 font-bold">{activePack.topic}</span> is scheduled for 10:00 AM. Everything you need to teach has been source-grounded and compiled.

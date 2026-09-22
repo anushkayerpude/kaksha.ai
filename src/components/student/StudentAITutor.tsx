@@ -46,7 +46,7 @@ export const StudentAITutor: React.FC<StudentAITutorProps> = ({
     {
       id: 'msg-1',
       role: 'assistant',
-      text: `👋 Hey Aryan! I'm your Kaksha AI Study Buddy for **${pack.topic}**.\n\nWhenever a concept feels confusing or you want a simple story, exam tip, or memory trick, just ask me! I'm grounded in Dr. Rajesh Sharma's lecture material.`,
+      text: `👋 Hey Aryan! I'm your Kaksha AI Study Buddy for **${pack.topic}**.\n\nWhenever a concept feels confusing or you want a simple story, exam tip, or memory trick, just ask me! I'm grounded in Dr. Anushka Yerpude's lecture material.`,
       mode: 'Like I am 10',
     },
   ]);
@@ -142,7 +142,7 @@ export const StudentAITutor: React.FC<StudentAITutorProps> = ({
             <div>
               <h2 className="text-xl font-black text-slate-900">AI Study Buddy</h2>
               <p className="text-xs text-slate-500">
-                Grounded in Dr. Rajesh Sharma&apos;s lecture: <span className="text-[#0d9488] font-bold">{pack.topic}</span>
+                Grounded in Dr. Anushka Yerpude&apos;s lecture: <span className="text-[#0d9488] font-bold">{pack.topic}</span>
               </p>
             </div>
           </div>
