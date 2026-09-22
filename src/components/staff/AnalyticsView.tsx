@@ -8,12 +8,14 @@ interface AnalyticsViewProps {
   analytics: ClassAnalytics;
   pack: ClassroomPack;
   onGenerateRevision: (prompt: string) => void;
+  onOpenNextTopicPPT?: () => void;
 }
 
 export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
   analytics,
   pack,
   onGenerateRevision,
+  onOpenNextTopicPPT,
 }) => {
   return (
     <div className="space-y-8 animate-fade-in pb-16">
@@ -67,14 +69,26 @@ export const AnalyticsView: React.FC<AnalyticsViewProps> = ({
             </p>
           </div>
 
-          <button
-            onClick={() => onGenerateRevision(analytics.revisionLessonPrompt)}
-            className="flex items-center gap-2 px-6 py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white shadow-sm transition-all transform hover:-translate-y-0.5 shrink-0"
-          >
-            <Sparkles className="w-4 h-4 text-white" />
-            Generate 15-Min Revision Lesson
-            <ArrowRight className="w-4 h-4" />
-          </button>
+          <div className="flex flex-wrap items-center gap-3 shrink-0">
+            {onOpenNextTopicPPT && (
+              <button
+                onClick={onOpenNextTopicPPT}
+                className="flex items-center gap-2 px-5 py-4 rounded-xl text-xs sm:text-sm font-bold bg-[#881337] hover:bg-[#9f1239] text-white shadow-sm transition-all transform hover:-translate-y-0.5"
+              >
+                <Sparkles className="w-4 h-4 text-amber-300" />
+                <span>What to Teach Next (PPT)</span>
+              </button>
+            )}
+
+            <button
+              onClick={() => onGenerateRevision(analytics.revisionLessonPrompt)}
+              className="flex items-center gap-2 px-6 py-4 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white shadow-sm transition-all transform hover:-translate-y-0.5"
+            >
+              <Sparkles className="w-4 h-4 text-white" />
+              Generate 15-Min Revision Lesson
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
         </div>
       </div>
 

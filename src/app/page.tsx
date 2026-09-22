@@ -14,6 +14,7 @@ import { ResearchPackViewer } from '@/components/staff/ResearchPackViewer';
 import { ClassroomPackViewer } from '@/components/staff/ClassroomPackViewer';
 import { TeachModeModal } from '@/components/staff/TeachModeModal';
 import { AnalyticsView } from '@/components/staff/AnalyticsView';
+import { NextTopicPPTModal } from '@/components/staff/NextTopicPPTModal';
 
 // Student Components
 import { StudentDashboard } from '@/components/student/StudentDashboard';
@@ -33,8 +34,9 @@ export default function Home() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isTeachModeOpen, setIsTeachModeOpen] = useState(false);
   const [isOnlineClassOpen, setIsOnlineClassOpen] = useState(false);
+  const [isNextTopicPPTOpen, setIsNextTopicPPTOpen] = useState(false);
 
-  // Studio pre-fill state (when triggered by revision lesson)
+  // Studio pre-fill state (when triggered by revision lesson or next topic)
   const [studioTopic, setStudioTopic] = useState<string>('Convolutional Neural Networks');
   const [studioInstructions, setStudioInstructions] = useState<string>(
     'Use practical examples, biological intuition, and clear sizing arithmetic.'
@@ -99,6 +101,15 @@ export default function Home() {
     setActiveTab('student-tutor');
   };
 
+  const handlePromoteNextTopicToFullPack = (topic: string, durationMinutes: number) => {
+    setStudioTopic(topic);
+    setStudioDuration(durationMinutes);
+    setStudioInstructions(
+      `Synthesize complete lecture plan, 3-tier worksheets, 5-question quizzes, and Google Workspace artifacts for ${topic}. Build direct prerequisite bridges from ${store.activePack.topic}.`
+    );
+    setActiveTab('studio');
+  };
+
   const handleStartOnlineClass = () => {
     if (!store.onlineSession || !store.onlineSession.isLive) {
       store.startOnlineClass(store.activePack);
@@ -118,12 +129,16 @@ export default function Home() {
 
   // Render Institutional Split Landing Page if not logged in
   if (!isLoggedIn) {
-    return <AuthPage onAuthenticate={handleAuthenticate} />;
+    return (
+      <div className="min-h-screen bg-[#fbf9f5] flex flex-col font-sans">
+        <AuthPage onAuthenticate={handleAuthenticate} />
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#fbf9f5] text-[#181c24] selection:bg-indigo-100 selection:text-indigo-900">
-      {/* Universal Header with Role Switcher & Institutional Theme */}
+    <div className="min-h-screen bg-[#fbf9f5] flex flex-col font-sans text-slate-800">
+      {/* Institutional Top Navigation */}
       <Header
         role={store.role}
         setRole={(newRole) => {
@@ -172,6 +187,7 @@ export default function Home() {
                 activePack={store.activePack}
                 recentPacks={store.packsList}
                 analytics={store.analytics}
+                onOpenNextTopicPPT={() => setIsNextTopicPPTOpen(true)}
               />
             )}
 
@@ -198,6 +214,7 @@ export default function Home() {
                   onStartOnlineClass={handleStartOnlineClass}
                   isOnlineLive={store.isOnlineClassActive}
                   apiKey={store.apiKey}
+                  onOpenNextTopicPPT={() => setIsNextTopicPPTOpen(true)}
                 />
                 <ResearchPackViewer
                   researchPack={store.activePack.researchPack}
@@ -211,6 +228,7 @@ export default function Home() {
                 analytics={store.analytics}
                 pack={store.activePack}
                 onGenerateRevision={handleGenerateRevision}
+                onOpenNextTopicPPT={() => setIsNextTopicPPTOpen(true)}
               />
             )}
           </>
@@ -297,6 +315,19 @@ export default function Home() {
           onVotePoll={store.voteInPoll}
           onToggleHandRaise={store.toggleHandRaise}
           apiKey={store.apiKey}
+        />
+      )}
+
+      {/* What to Teach Next PPT Generator Modal */}
+      {isNextTopicPPTOpen && (
+        <NextTopicPPTModal
+          isOpen={isNextTopicPPTOpen}
+          onClose={() => setIsNextTopicPPTOpen(false)}
+          currentPack={store.activePack}
+          analytics={store.analytics}
+          instructorName={store.currentUser.name}
+          apiKey={store.apiKey}
+          onPromoteToFullPack={handlePromoteNextTopicToFullPack}
         />
       )}
 

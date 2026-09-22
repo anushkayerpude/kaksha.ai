@@ -16,6 +16,7 @@ interface ClassroomPackViewerProps {
   onStartOnlineClass?: () => void;
   isOnlineLive?: boolean;
   apiKey?: string;
+  onOpenNextTopicPPT?: () => void;
 }
 
 export const ClassroomPackViewer: React.FC<ClassroomPackViewerProps> = ({
@@ -25,6 +26,7 @@ export const ClassroomPackViewer: React.FC<ClassroomPackViewerProps> = ({
   onStartOnlineClass,
   isOnlineLive,
   apiKey,
+  onOpenNextTopicPPT,
 }) => {
   const [activeTab, setActiveTab] = useState<
     'timeline' | 'presentation' | 'briefing' | 'misconceptions' | 'activity' | 'worksheet' | 'quiz' | 'exit'
@@ -115,6 +117,16 @@ export const ClassroomPackViewer: React.FC<ClassroomPackViewerProps> = ({
               In-Class Teleprompter
             </button>
 
+            {onOpenNextTopicPPT && (
+              <button
+                onClick={onOpenNextTopicPPT}
+                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold bg-[#881337] hover:bg-[#9f1239] text-white shadow-xs transition-all"
+              >
+                <Sparkles className="w-4 h-4 text-amber-200" />
+                <span>🔮 What to Teach Next (PPT)</span>
+              </button>
+            )}
+
             {pack.publishedToStudents ? (
               <span className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
                 <CheckCircle2 className="w-4 h-4 text-emerald-600" />
@@ -123,7 +135,7 @@ export const ClassroomPackViewer: React.FC<ClassroomPackViewerProps> = ({
             ) : (
               <button
                 onClick={() => onPublishToStudents(pack.id)}
-                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold bg-[#881337] hover:bg-[#9f1239] text-white shadow-xs transition-all"
+                className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-900 text-white shadow-xs transition-all"
               >
                 <Share2 className="w-4 h-4" />
                 Publish to Students
@@ -339,6 +351,28 @@ export const ClassroomPackViewer: React.FC<ClassroomPackViewerProps> = ({
             <p className="text-xs font-bold text-[#881337] uppercase tracking-wider">Presenter Notes (For Teacher):</p>
             <p className="text-xs text-slate-700 italic">{pack.presentation[currentSlideIndex].presenterNotes}</p>
           </div>
+
+          {/* What to Teach Next Callout Banner */}
+          {onOpenNextTopicPPT && (
+            <div className="max-w-4xl mx-auto p-5 rounded-2xl bg-gradient-to-r from-rose-50 via-teal-50 to-rose-50 border border-rose-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="p-1 rounded-md bg-rose-100 text-[#881337] text-xs font-bold">🔮 CURRICULUM CONTINUITY</span>
+                  <span className="text-xs font-bold text-slate-800">Done with &quot;{pack.topic}&quot;?</span>
+                </div>
+                <p className="text-xs text-slate-600">
+                  Generate the next lecture presentation deck (.pptx) with contextual prerequisite bridging, proofs, and delivery cues.
+                </p>
+              </div>
+              <button
+                onClick={onOpenNextTopicPPT}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-[#881337] hover:bg-[#9f1239] text-white shadow-xs transition-all shrink-0"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+                <span>Generate Next Topic PPT</span>
+              </button>
+            </div>
+          )}
         </div>
       )}
 

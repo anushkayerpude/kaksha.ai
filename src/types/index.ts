@@ -265,3 +265,26 @@ export interface OnlineClassSession {
   recordingActive: boolean;
 }
 
+export interface NextTopicRecommendation {
+  id: string;
+  topic: string;
+  category: 'Direct Sequential' | 'Downstream Application' | 'Architecture Deep-Dive' | 'Remedial Refresher';
+  reason: string;
+  prerequisitesMet: string[];
+  estimatedDifficulty: 'Introductory' | 'Intermediate' | 'Advanced';
+  suggestedDuration: number;
+  highlightIcon?: string;
+}
+
+export interface GeneratedNextDeck {
+  id: string;
+  topic: string;
+  previousTopic: string;
+  subject: string;
+  instructorName: string;
+  targetDuration: number;
+  generatedAt: string;
+  rationale: string;
+  slides: PresentationSlide[];
+}
+

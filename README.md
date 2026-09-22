@@ -127,6 +127,22 @@ Tailored specifically for student clarity and stress-free learning:
 
 ---
 
+### 🔮 9. "What to Teach Next" Autonomous PPT Deck Generator
+- **Intelligent Curriculum Sequencing Engine**: Analyzes the lecture just completed (e.g., *Convolutional Neural Networks*) along with class mastery analytics to suggest contextual next topics:
+  - 🔄 **Direct Sequential**: *Deep Residual Networks (ResNets) & Identity Skip Connections* (resolves depth degradation and vanishing gradients).
+  - 🎯 **Downstream Application**: *Object Detection & Spatial Bounding Boxes (YOLO & Faster R-CNN)* (transitions from classification to localization).
+  - ✨ **Architecture Deep-Dive**: *Vision Transformers (ViT) & Patch Embeddings* (examines the shift from local convolution bias to global self-attention).
+  - ⚠️ **Remedial Refresher**: Automatically surfaced if class mastery radar indicates any sub-topic below 60%.
+- **Contextual Prerequisite Bridging**: Slide 1 is an explicit bridge connecting yesterday's concepts to today's necessity ("Recap: What we mastered vs. The Bottleneck that demands this next architecture").
+- **Theoretical Rigor & Mathematical Proofs**: Synthesizes formal proofs (e.g., chain rule $\frac{\partial E}{\partial x} = \frac{\partial E}{\partial y}(1 + \frac{\partial F}{\partial x})$ and why the $+1$ factor prevents vanishing signals).
+- **Visual Diagram Blueprints**: Slide-by-slide visual architecture guides describing exact layout, signal routing, and callouts.
+- **Faculty Spoken Delivery Cues**: Live verbal narration scripts for Dr. Anushka Yerpude embedded directly in the deck.
+- **1-Click PowerPoint (.pptx) Binary Download**: Generates styled `.pptx` files client-side via `pptxgenjs` with widescreen 16:9 layout, institutional maroon & teal palette, and native presenter notes readable in Microsoft PowerPoint, Apple Keynote, and Google Slides.
+- **1-Click Google Slides Export**: Instant formatted outline ready for Google Slides.
+- **Promote to Full Classroom Pack**: 1-click button that pre-fills the Teaching Studio to compile a full 60-minute timeline, 3-tier worksheets, 5-question quizzes, and Google Workspace artifacts for that next topic.
+
+---
+
 ## 🏛️ System Architecture
 
 ```mermaid

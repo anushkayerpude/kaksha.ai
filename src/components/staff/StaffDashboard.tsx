@@ -14,6 +14,7 @@ interface StaffDashboardProps {
   activePack: ClassroomPack;
   recentPacks: ClassroomPack[];
   analytics: ClassAnalytics;
+  onOpenNextTopicPPT?: () => void;
 }
 
 export const StaffDashboard: React.FC<StaffDashboardProps> = ({
@@ -26,6 +27,7 @@ export const StaffDashboard: React.FC<StaffDashboardProps> = ({
   activePack,
   recentPacks,
   analytics,
+  onOpenNextTopicPPT,
 }) => {
   return (
     <div className="space-y-8 animate-fade-in pb-12">
@@ -67,6 +69,15 @@ export const StaffDashboard: React.FC<StaffDashboardProps> = ({
               <Presentation className="w-4 h-4" />
               In-Class Teleprompter
             </button>
+            {onOpenNextTopicPPT && (
+              <button
+                onClick={onOpenNextTopicPPT}
+                className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold bg-amber-400 hover:bg-amber-300 text-[#881337] shadow-sm transition-all transform hover:-translate-y-0.5"
+              >
+                <Sparkles className="w-4 h-4 text-[#881337]" />
+                What to Teach Next (PPT)
+              </button>
+            )}
             <button
               onClick={onStartNewLecture}
               className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold bg-white text-[#881337] hover:bg-slate-50 shadow-sm transition-all transform hover:-translate-y-0.5"
@@ -197,19 +208,30 @@ export const StaffDashboard: React.FC<StaffDashboardProps> = ({
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-2">
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-2">
                 <button
                   onClick={() => onViewPack(activePack)}
                   className="flex items-center gap-1.5 text-xs font-bold text-[#881337] hover:underline"
                 >
                   Inspect Full Classroom Pack <ArrowRight className="w-3.5 h-3.5" />
                 </button>
-                <button
-                  onClick={onEnterTeachMode}
-                  className="px-4 py-2 rounded-xl text-xs font-bold bg-[#0d9488] hover:bg-[#0f766e] text-white transition-all shadow-xs"
-                >
-                  Start Class in Teach Mode
-                </button>
+                <div className="flex items-center gap-2">
+                  {onOpenNextTopicPPT && (
+                    <button
+                      onClick={onOpenNextTopicPPT}
+                      className="px-3.5 py-2 rounded-xl text-xs font-bold bg-rose-50 hover:bg-rose-100 text-[#881337] border border-rose-200 transition-all flex items-center gap-1.5 shadow-2xs"
+                    >
+                      <Sparkles className="w-3.5 h-3.5" />
+                      What to Teach Next (PPT)
+                    </button>
+                  )}
+                  <button
+                    onClick={onEnterTeachMode}
+                    className="px-4 py-2 rounded-xl text-xs font-bold bg-[#0d9488] hover:bg-[#0f766e] text-white transition-all shadow-xs"
+                  >
+                    Start Class in Teach Mode
+                  </button>
+                </div>
               </div>
             </div>
 
