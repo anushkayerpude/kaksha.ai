@@ -14,6 +14,11 @@ import {
   LivePollState,
 } from '../types';
 import { demoClassroomPack, mockClassAnalytics, mockUsers } from './mockData';
+import {
+  savePackToFirestore,
+  fetchPacksFromFirestore,
+  submitQuizToFirestore,
+} from './firebase';
 
 const STORAGE_KEYS = {
   ACTIVE_ROLE: 'kaksha_active_role',
@@ -24,6 +29,7 @@ const STORAGE_KEYS = {
   DOUBTS: 'kaksha_student_doubts',
   API_KEY: 'kaksha_gemini_api_key',
   ONLINE_SESSION: 'kaksha_online_session',
+  USER_PROFILE: 'kaksha_user_profile',
 };
 
 export function useKakshaStore() {
@@ -49,11 +55,19 @@ export function useKakshaStore() {
     },
   ]);
   const [apiKey, setApiKeyState] = useState<string>('');
+  const [customUser, setCustomUserState] = useState<UserProfile | null>(null);
 
-  // Hydrate from localStorage on client mount
+  // Hydrate from localStorage and sync Cloud Firestore on mount
   useEffect(() => {
     setIsClient(true);
     try {
+      const savedUser = localStorage.getItem(STORAGE_KEYS.USER_PROFILE);
+      if (savedUser) {
+        try {
+          setCustomUserState(JSON.parse(savedUser));
+        } catch (e) {}
+      }
+
       const savedRole = localStorage.getItem(STORAGE_KEYS.ACTIVE_ROLE) as UserRole | null;
       if (savedRole) setRoleState(savedRole);
 
@@ -77,7 +91,35 @@ export function useKakshaStore() {
     } catch (e) {
       console.warn('LocalStorage error:', e);
     }
+
+    // Pull shared Cloud Firestore packs
+    fetchPacksFromFirestore()
+      .then((cloudPacks) => {
+        if (cloudPacks && cloudPacks.length > 0) {
+          setPacksListState((prev) => {
+            const map = new Map<string, ClassroomPack>();
+            [...cloudPacks, ...prev].forEach((p) => map.set(p.id, p));
+            return Array.from(map.values());
+          });
+          const latestPublished = cloudPacks.find((p) => p.publishedToStudents);
+          if (latestPublished) {
+            setActivePackState(latestPublished);
+          }
+        }
+      })
+      .catch((e) => console.log('[Firebase] Local sync active:', e?.message));
   }, []);
+
+  const setCurrentUser = (user: UserProfile | null) => {
+    setCustomUserState(user);
+    if (typeof window !== 'undefined') {
+      if (user) {
+        localStorage.setItem(STORAGE_KEYS.USER_PROFILE, JSON.stringify(user));
+      } else {
+        localStorage.removeItem(STORAGE_KEYS.USER_PROFILE);
+      }
+    }
+  };
 
   const setRole = (newRole: UserRole) => {
     setRoleState(newRole);
@@ -101,6 +143,8 @@ export function useKakshaStore() {
       localStorage.setItem(STORAGE_KEYS.PACKS_LIST, JSON.stringify(updated));
       localStorage.setItem(STORAGE_KEYS.ACTIVE_PACK, JSON.stringify(pack));
     }
+    // Cloud Firestore synchronization
+    savePackToFirestore(pack);
   };
 
   const publishPackToStudents = (packId: string) => {
@@ -116,6 +160,8 @@ export function useKakshaStore() {
       localStorage.setItem(STORAGE_KEYS.ACTIVE_PACK, JSON.stringify(updatedPack));
       localStorage.setItem(STORAGE_KEYS.PACKS_LIST, JSON.stringify(updatedList));
     }
+    // Cloud Firestore synchronization
+    savePackToFirestore(updatedPack);
   };
 
   const submitStudentQuiz = (submission: StudentQuizSubmission) => {
@@ -136,6 +182,8 @@ export function useKakshaStore() {
       localStorage.setItem(STORAGE_KEYS.QUIZ_SUBMISSIONS, JSON.stringify(updated));
       localStorage.setItem(STORAGE_KEYS.ANALYTICS, JSON.stringify(updatedAnalytics));
     }
+    // Cloud Firestore synchronization
+    submitQuizToFirestore(submission);
   };
 
   const addStudentDoubt = (doubt: StudentDoubt) => {
@@ -365,13 +413,14 @@ export function useKakshaStore() {
     }
   };
 
-  const currentUser: UserProfile = role === 'STAFF' ? mockUsers[0] : mockUsers[1];
+  const currentUser: UserProfile = customUser || (role === 'STAFF' ? mockUsers[0] : mockUsers[1]);
 
   return {
     isClient,
     role,
     setRole,
     currentUser,
+    setCurrentUser,
     activePack,
     setActivePack,
     packsList,

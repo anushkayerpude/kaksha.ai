@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useKakshaStore } from '@/lib/store';
 import { Header } from '@/components/common/Header';
 import { SettingsModal } from '@/components/common/SettingsModal';
 import { AuthPage } from '@/components/auth/AuthPage';
+import { logoutFirebase, onFirebaseAuthState } from '@/lib/firebase';
 
 // Staff Components
 import { StaffDashboard } from '@/components/staff/StaffDashboard';
@@ -43,7 +44,20 @@ export default function Home() {
   // Tutor initial context
   const [tutorContextQuery, setTutorContextQuery] = useState<string>('');
 
+  // Auto-restore session if logged in
+  useEffect(() => {
+    const unsub = onFirebaseAuthState((fbUser) => {
+      if (fbUser) {
+        setIsLoggedIn(true);
+      }
+    });
+    return () => unsub();
+  }, []);
+
   const handleAuthenticate = (user: any, role: any) => {
+    if (user) {
+      store.setCurrentUser(user);
+    }
     store.setRole(role);
     setIsLoggedIn(true);
     if (role === 'STAFF') {
@@ -54,6 +68,8 @@ export default function Home() {
   };
 
   const handleLogout = () => {
+    logoutFirebase().catch(console.warn);
+    store.setCurrentUser(null);
     setIsLoggedIn(false);
   };
 
