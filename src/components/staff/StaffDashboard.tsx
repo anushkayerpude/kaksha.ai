@@ -9,6 +9,8 @@ interface StaffDashboardProps {
   onViewPack: (pack: ClassroomPack) => void;
   onOpenAnalytics: () => void;
   onEnterTeachMode: () => void;
+  onStartOnlineClass?: () => void;
+  isOnlineLive?: boolean;
   activePack: ClassroomPack;
   recentPacks: ClassroomPack[];
   analytics: ClassAnalytics;
@@ -19,6 +21,8 @@ export const StaffDashboard: React.FC<StaffDashboardProps> = ({
   onViewPack,
   onOpenAnalytics,
   onEnterTeachMode,
+  onStartOnlineClass,
+  isOnlineLive,
   activePack,
   recentPacks,
   analytics,
@@ -42,12 +46,26 @@ export const StaffDashboard: React.FC<StaffDashboardProps> = ({
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
+            {onStartOnlineClass && (
+              <button
+                onClick={onStartOnlineClass}
+                className={`flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold shadow-md transition-all transform hover:-translate-y-0.5 ${
+                  isOnlineLive
+                    ? 'bg-rose-500 hover:bg-rose-600 text-white animate-pulse'
+                    : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                }`}
+              >
+                <span className="w-2.5 h-2.5 rounded-full bg-white animate-ping" />
+                <span>{isOnlineLive ? 'Resume Online Class' : '🔴 Start Online Class'}</span>
+              </button>
+            )}
+
             <button
               onClick={onEnterTeachMode}
               className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold bg-[#0d9488] hover:bg-[#0f766e] text-white shadow-sm transition-all transform hover:-translate-y-0.5"
             >
               <Presentation className="w-4 h-4" />
-              Launch Teach Mode
+              In-Class Teleprompter
             </button>
             <button
               onClick={onStartNewLecture}

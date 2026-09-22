@@ -13,7 +13,8 @@ import {
   ArrowRight,
   Calculator,
   Compass,
-  AlertCircle
+  AlertCircle,
+  Radio
 } from 'lucide-react';
 
 interface StudentDashboardProps {
@@ -22,6 +23,8 @@ interface StudentDashboardProps {
   onNavigate: (tab: string) => void;
   hasSubmittedQuiz: boolean;
   recentScore?: number;
+  onJoinOnlineClass?: () => void;
+  isOnlineLive?: boolean;
 }
 
 export const StudentDashboard: React.FC<StudentDashboardProps> = ({
@@ -30,6 +33,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   onNavigate,
   hasSubmittedQuiz,
   recentScore,
+  onJoinOnlineClass,
+  isOnlineLive,
 }) => {
   // Interactive formula calculator state for students
   const [calcW, setCalcW] = useState(32);
@@ -41,6 +46,34 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
 
   return (
     <div className="space-y-8 animate-fade-in pb-16 font-sans">
+      {/* 🔴 Live Class Alert Banner */}
+      {isOnlineLive && onJoinOnlineClass && (
+        <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-r from-rose-600 via-rose-700 to-[#881337] text-white shadow-lg border border-rose-500 flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-pulse">
+          <div className="flex items-center gap-3">
+            <span className="w-4 h-4 rounded-full bg-white animate-ping" />
+            <div>
+              <span className="px-2.5 py-0.5 rounded-full bg-white/20 text-white text-[10px] font-black uppercase tracking-wider">
+                LIVE ONLINE NOW
+              </span>
+              <h3 className="text-base sm:text-lg font-black mt-1">
+                Dr. Ananya Sharma is conducting an Online Class on &quot;{activePack.topic}&quot;!
+              </h3>
+              <p className="text-xs text-white/80">
+                Join now for live synchronized slides, in-class polling, and instant AI Co-Host assistance.
+              </p>
+            </div>
+          </div>
+
+          <button
+            onClick={onJoinOnlineClass}
+            className="flex items-center justify-center gap-2 px-6 py-3 rounded-2xl bg-white text-rose-700 hover:bg-slate-50 font-black text-xs uppercase tracking-wider shadow-md transition-all shrink-0 hover:scale-105"
+          >
+            <Radio className="w-4 h-4 text-rose-600" />
+            <span>Join Live Class Now</span>
+          </button>
+        </div>
+      )}
+
       {/* Friendly Welcome Card */}
       <div className="relative overflow-hidden rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-[#0d9488] via-[#0f766e] to-[#115e59] text-white shadow-md border border-[#0d9488]">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">

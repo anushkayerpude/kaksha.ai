@@ -21,6 +21,9 @@ import { StudentQuizPlayer } from '@/components/student/StudentQuizPlayer';
 import { StudentAITutor } from '@/components/student/StudentAITutor';
 import { DoubtSolver } from '@/components/student/DoubtSolver';
 
+// Online Classroom Component
+import { OnlineClassRoom } from '@/components/online/OnlineClassRoom';
+
 export default function Home() {
   const store = useKakshaStore();
 
@@ -28,6 +31,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<string>('dashboard');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isTeachModeOpen, setIsTeachModeOpen] = useState(false);
+  const [isOnlineClassOpen, setIsOnlineClassOpen] = useState(false);
 
   // Studio pre-fill state (when triggered by revision lesson)
   const [studioTopic, setStudioTopic] = useState<string>('Convolutional Neural Networks');
@@ -79,6 +83,20 @@ export default function Home() {
     setActiveTab('student-tutor');
   };
 
+  const handleStartOnlineClass = () => {
+    if (!store.onlineSession || !store.onlineSession.isLive) {
+      store.startOnlineClass(store.activePack);
+    }
+    setIsOnlineClassOpen(true);
+  };
+
+  const handleJoinOnlineClass = () => {
+    if (!store.onlineSession || !store.onlineSession.isLive) {
+      store.startOnlineClass(store.activePack);
+    }
+    setIsOnlineClassOpen(true);
+  };
+
   const recentStudentScore =
     store.submissions.length > 0 ? store.submissions[0].score : undefined;
 
@@ -110,6 +128,13 @@ export default function Home() {
         }}
         onLogout={handleLogout}
         hasPublishedPack={store.activePack.publishedToStudents}
+        onOpenOnlineClass={() => {
+          if (!store.onlineSession || !store.onlineSession.isLive) {
+            store.startOnlineClass(store.activePack);
+          }
+          setIsOnlineClassOpen(true);
+        }}
+        isOnlineLive={store.isOnlineClassActive}
       />
 
       {/* Main Content Area */}
@@ -126,6 +151,8 @@ export default function Home() {
                 }}
                 onOpenAnalytics={() => setActiveTab('analytics')}
                 onEnterTeachMode={() => setIsTeachModeOpen(true)}
+                onStartOnlineClass={handleStartOnlineClass}
+                isOnlineLive={store.isOnlineClassActive}
                 activePack={store.activePack}
                 recentPacks={store.packsList}
                 analytics={store.analytics}
@@ -152,6 +179,8 @@ export default function Home() {
                     store.publishPackToStudents(packId);
                   }}
                   onEnterTeachMode={() => setIsTeachModeOpen(true)}
+                  onStartOnlineClass={handleStartOnlineClass}
+                  isOnlineLive={store.isOnlineClassActive}
                   apiKey={store.apiKey}
                 />
                 <ResearchPackViewer
@@ -181,6 +210,8 @@ export default function Home() {
                 onNavigate={setActiveTab}
                 hasSubmittedQuiz={store.submissions.length > 0}
                 recentScore={recentStudentScore}
+                onJoinOnlineClass={handleJoinOnlineClass}
+                isOnlineLive={store.isOnlineClassActive}
               />
             )}
 
@@ -229,6 +260,26 @@ export default function Home() {
         <TeachModeModal
           pack={store.activePack}
           onClose={() => setIsTeachModeOpen(false)}
+          apiKey={store.apiKey}
+        />
+      )}
+
+      {/* Live Online Virtual Classroom Overlay Modal */}
+      {isOnlineClassOpen && store.onlineSession && (
+        <OnlineClassRoom
+          pack={store.activePack}
+          session={store.onlineSession}
+          currentUser={store.currentUser}
+          onClose={() => setIsOnlineClassOpen(false)}
+          onEndClass={() => {
+            store.endOnlineClass();
+            setIsOnlineClassOpen(false);
+          }}
+          onSlideChange={store.setOnlineSlide}
+          onSendMessage={store.sendOnlineChatMessage}
+          onLaunchPoll={store.launchLivePoll}
+          onVotePoll={store.voteInPoll}
+          onToggleHandRaise={store.toggleHandRaise}
           apiKey={store.apiKey}
         />
       )}

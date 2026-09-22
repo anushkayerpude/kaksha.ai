@@ -216,3 +216,52 @@ export interface StudentDoubt {
   status: 'Resolved' | 'Pending';
   createdAt: string;
 }
+
+export interface OnlineParticipant {
+  id: string;
+  name: string;
+  role: 'TEACHER' | 'STUDENT';
+  isAudioOn: boolean;
+  isVideoOn: boolean;
+  isHandRaised: boolean;
+  joinedAt: string;
+  avatarBg: string;
+}
+
+export interface LiveChatMessage {
+  id: string;
+  senderId: string;
+  senderName: string;
+  senderRole: 'TEACHER' | 'STUDENT' | 'AI_COHOST';
+  text: string;
+  timestamp: string;
+  isQuestion?: boolean;
+  aiAnswer?: string;
+}
+
+export interface LivePollState {
+  id: string;
+  question: string;
+  options: string[];
+  correctAnswer?: string;
+  votes: Record<number, number>; // optionIndex -> count
+  totalVotes: number;
+  isActive: boolean;
+  userVotedIndex?: number;
+}
+
+export interface OnlineClassSession {
+  id: string;
+  packId: string;
+  topic: string;
+  subject: string;
+  teacherName: string;
+  isLive: boolean;
+  startedAt: string;
+  currentSlideIndex: number;
+  participants: OnlineParticipant[];
+  chatMessages: LiveChatMessage[];
+  activePoll: LivePollState | null;
+  recordingActive: boolean;
+}
+

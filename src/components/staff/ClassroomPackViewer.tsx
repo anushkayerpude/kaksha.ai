@@ -13,6 +13,8 @@ interface ClassroomPackViewerProps {
   pack: ClassroomPack;
   onPublishToStudents: (packId: string) => void;
   onEnterTeachMode: () => void;
+  onStartOnlineClass?: () => void;
+  isOnlineLive?: boolean;
   apiKey?: string;
 }
 
@@ -20,6 +22,8 @@ export const ClassroomPackViewer: React.FC<ClassroomPackViewerProps> = ({
   pack,
   onPublishToStudents,
   onEnterTeachMode,
+  onStartOnlineClass,
+  isOnlineLive,
   apiKey,
 }) => {
   const [activeTab, setActiveTab] = useState<
@@ -91,12 +95,24 @@ export const ClassroomPackViewer: React.FC<ClassroomPackViewerProps> = ({
 
           {/* Action Buttons */}
           <div className="flex flex-wrap items-center gap-2.5">
+            {onStartOnlineClass && (
+              <button
+                onClick={onStartOnlineClass}
+                className={`flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold text-white shadow-xs transition-all ${
+                  isOnlineLive ? 'bg-rose-600 hover:bg-rose-700 animate-pulse' : 'bg-emerald-600 hover:bg-emerald-700'
+                }`}
+              >
+                <span className="w-2 h-2 rounded-full bg-white animate-ping" />
+                <span>{isOnlineLive ? 'Resume Online Class' : '🔴 Take Online Class'}</span>
+              </button>
+            )}
+
             <button
               onClick={onEnterTeachMode}
               className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-bold bg-[#0d9488] hover:bg-[#0f766e] text-white shadow-xs transition-all"
             >
               <Presentation className="w-4 h-4" />
-              Start Teach Mode
+              In-Class Teleprompter
             </button>
 
             {pack.publishedToStudents ? (

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { UserRole } from '@/types';
-import { Sparkles, GraduationCap, School, Settings, RotateCcw, BookOpen, BarChart3, HelpCircle, Presentation, LogOut } from 'lucide-react';
+import { Sparkles, GraduationCap, School, Settings, RotateCcw, BookOpen, BarChart3, HelpCircle, Presentation, LogOut, Radio } from 'lucide-react';
 
 interface HeaderProps {
   role: UserRole;
@@ -14,6 +14,8 @@ interface HeaderProps {
   onResetDemo: () => void;
   onLogout: () => void;
   hasPublishedPack: boolean;
+  onOpenOnlineClass?: () => void;
+  isOnlineLive?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -26,6 +28,8 @@ export const Header: React.FC<HeaderProps> = ({
   onResetDemo,
   onLogout,
   hasPublishedPack,
+  onOpenOnlineClass,
+  isOnlineLive,
 }) => {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-[#e6dfd5] bg-[#ffffff]/90 backdrop-blur-xl shadow-xs">
@@ -163,6 +167,23 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Right Controls: Role Switcher & User Profile */}
           <div className="flex items-center gap-2 sm:gap-3">
+            {/* Live Online Class Quick Trigger */}
+            {onOpenOnlineClass && (
+              <button
+                onClick={onOpenOnlineClass}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow-xs border ${
+                  isOnlineLive
+                    ? 'bg-rose-600 hover:bg-rose-700 text-white border-rose-500 animate-pulse'
+                    : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-300'
+                }`}
+                title={isOnlineLive ? 'Online Class is LIVE! Click to enter' : (role === 'STAFF' ? 'Launch Live Online Virtual Classroom' : 'Join Live Virtual Classroom')}
+              >
+                <Radio className={`w-3.5 h-3.5 ${isOnlineLive ? 'text-white animate-spin' : 'text-emerald-600'}`} />
+                <span className="hidden sm:inline">{isOnlineLive ? '🔴 LIVE CLASS' : (role === 'STAFF' ? '🔴 Start Online' : 'Join Live')}</span>
+                <span className="sm:hidden">{isOnlineLive ? 'LIVE' : 'Online'}</span>
+              </button>
+            )}
+
             {/* Role Switcher Toggle */}
             <div className="flex items-center bg-[#f5f2eb] p-1 rounded-xl border border-[#e6dfd5]">
               <button

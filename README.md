@@ -115,6 +115,18 @@ Tailored specifically for student clarity and stress-free learning:
 
 ---
 
+### 🔴 8. Live Online Virtual Classroom & WebRTC Studio
+- **Faculty-Initiated Remote Classes**: Teachers can launch a live online classroom in 1-click directly from the Staff Dashboard, Classroom Pack Viewer, or Navigation bar.
+- **WebRTC Camera & Microphone Integration**: Real browser webcam & microphone streaming via `navigator.mediaDevices.getUserMedia` (with graceful fallback to an animated faculty avatar and audio wave visualizer if camera permissions are blocked).
+- **Synchronized Presentation Projection**: Synchronized slide projection with slide counter, teacher delivery cue drawer, and screen-sharing support (`getDisplayMedia`).
+- **Autonomous AI Co-Host (Gemini 3.8)**: An in-class AI teaching assistant actively monitoring live chat, answering student questions on-the-fly grounded in the current slide.
+- **Live In-Class Checkpoint Polling**: Teachers can launch interactive comprehension polls during the lecture; students vote instantly with animated real-time percentage distributions.
+- **Student Hand Raising & Attendance Roster**: Live attendance roster tracking student participation, raised hands queue with dismiss buttons, and 1-click **Download Attendance CSV** for university records.
+- **Floating Emoji Reactions Dock**: Live student feedback via floating reactions (💡 Eureka, 👏 Clap, ❓ Question, 🚀 Mind Blown, ❤️ Loved it).
+- **Session Recap & Analytics Modal**: Instant end-of-class dashboard summarizing lecture duration, attendance percentage, poll comprehension rate, and auto-generated study takeaways.
+
+---
+
 ## 🏛️ System Architecture
 
 ```mermaid

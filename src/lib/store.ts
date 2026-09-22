@@ -1,7 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ClassroomPack, ClassAnalytics, UserProfile, UserRole, StudentQuizSubmission, StudentDoubt } from '../types';
+import {
+  ClassroomPack,
+  ClassAnalytics,
+  UserProfile,
+  UserRole,
+  StudentQuizSubmission,
+  StudentDoubt,
+  OnlineClassSession,
+  OnlineParticipant,
+  LiveChatMessage,
+  LivePollState,
+} from '../types';
 import { demoClassroomPack, mockClassAnalytics, mockUsers } from './mockData';
 
 const STORAGE_KEYS = {
@@ -12,6 +23,7 @@ const STORAGE_KEYS = {
   ANALYTICS: 'kaksha_class_analytics',
   DOUBTS: 'kaksha_student_doubts',
   API_KEY: 'kaksha_gemini_api_key',
+  ONLINE_SESSION: 'kaksha_online_session',
 };
 
 export function useKakshaStore() {
@@ -21,6 +33,7 @@ export function useKakshaStore() {
   const [packsList, setPacksListState] = useState<ClassroomPack[]>([demoClassroomPack]);
   const [analytics, setAnalyticsState] = useState<ClassAnalytics>(mockClassAnalytics);
   const [submissions, setSubmissionsState] = useState<StudentQuizSubmission[]>([]);
+  const [onlineSession, setOnlineSessionState] = useState<OnlineClassSession | null>(null);
   const [doubts, setDoubtsState] = useState<StudentDoubt[]>([
     {
       id: 'doubt-1',
@@ -140,16 +153,215 @@ export function useKakshaStore() {
     }
   };
 
+  const startOnlineClass = (pack: ClassroomPack) => {
+    const initialParticipants: OnlineParticipant[] = [
+      {
+        id: 'user-sharma',
+        name: 'Dr. Ananya Sharma',
+        role: 'TEACHER',
+        isAudioOn: true,
+        isVideoOn: true,
+        isHandRaised: false,
+        joinedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        avatarBg: 'bg-[#881337]',
+      },
+      {
+        id: 'user-aryan',
+        name: 'Aryan Verma',
+        role: 'STUDENT',
+        isAudioOn: false,
+        isVideoOn: true,
+        isHandRaised: false,
+        joinedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        avatarBg: 'bg-[#0d9488]',
+      },
+      {
+        id: 'user-priya',
+        name: 'Priya Patel',
+        role: 'STUDENT',
+        isAudioOn: false,
+        isVideoOn: false,
+        isHandRaised: false,
+        joinedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        avatarBg: 'bg-indigo-600',
+      },
+      {
+        id: 'user-rohan',
+        name: 'Rohan Mehta',
+        role: 'STUDENT',
+        isAudioOn: false,
+        isVideoOn: true,
+        isHandRaised: false,
+        joinedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        avatarBg: 'bg-amber-600',
+      },
+      {
+        id: 'user-sneha',
+        name: 'Sneha Joshi',
+        role: 'STUDENT',
+        isAudioOn: false,
+        isVideoOn: true,
+        isHandRaised: false,
+        joinedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        avatarBg: 'bg-emerald-600',
+      },
+    ];
+
+    const initialMessages: LiveChatMessage[] = [
+      {
+        id: 'chat-1',
+        senderId: 'user-sharma',
+        senderName: 'Dr. Ananya Sharma',
+        senderRole: 'TEACHER',
+        text: `Welcome everyone to our live online lecture on "${pack.topic}"! Please let me know in the chat if slides and audio are clear.`,
+        timestamp: '10:00 AM',
+      },
+      {
+        id: 'chat-2',
+        senderId: 'user-aryan',
+        senderName: 'Aryan Verma',
+        senderRole: 'STUDENT',
+        text: 'Good morning Professor! Audio and slides are crystal clear.',
+        timestamp: '10:01 AM',
+      },
+      {
+        id: 'chat-3',
+        senderId: 'ai-cohost',
+        senderName: 'Kaksha AI Co-Host',
+        senderRole: 'AI_COHOST',
+        text: '👋 AI Co-Host is active. I will summarize chat questions and provide quick formula references during the lecture.',
+        timestamp: '10:01 AM',
+      },
+    ];
+
+    const newSession: OnlineClassSession = {
+      id: `session-${Date.now()}`,
+      packId: pack.id,
+      topic: pack.topic,
+      subject: pack.subject,
+      teacherName: 'Dr. Ananya Sharma',
+      isLive: true,
+      startedAt: new Date().toISOString(),
+      currentSlideIndex: 0,
+      participants: initialParticipants,
+      chatMessages: initialMessages,
+      activePoll: null,
+      recordingActive: true,
+    };
+
+    setOnlineSessionState(newSession);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEYS.ONLINE_SESSION, JSON.stringify(newSession));
+    }
+    return newSession;
+  };
+
+  const endOnlineClass = () => {
+    if (onlineSession) {
+      const endedSession = { ...onlineSession, isLive: false, recordingActive: false };
+      setOnlineSessionState(endedSession);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(STORAGE_KEYS.ONLINE_SESSION, JSON.stringify(endedSession));
+      }
+    }
+  };
+
+  const setOnlineSlide = (index: number) => {
+    if (onlineSession) {
+      const updated = { ...onlineSession, currentSlideIndex: index };
+      setOnlineSessionState(updated);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(STORAGE_KEYS.ONLINE_SESSION, JSON.stringify(updated));
+      }
+    }
+  };
+
+  const sendOnlineChatMessage = async (text: string, isQuestion = false) => {
+    if (!onlineSession) return;
+    const user = currentUser;
+    const newMsg: LiveChatMessage = {
+      id: `chat-${Date.now()}`,
+      senderId: user.id,
+      senderName: user.name,
+      senderRole: user.role === 'STAFF' ? 'TEACHER' : 'STUDENT',
+      text,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      isQuestion,
+    };
+
+    const updatedMessages = [...onlineSession.chatMessages, newMsg];
+    const updatedSession = { ...onlineSession, chatMessages: updatedMessages };
+    setOnlineSessionState(updatedSession);
+
+    // If student asked a question, trigger AI Co-Host reply
+    if (isQuestion || text.includes('?')) {
+      setTimeout(() => {
+        const aiReplyText = `💡 [AI Co-Host]: Great question on "${text.slice(0, 45)}"! Slide ${onlineSession.currentSlideIndex + 1} explains that ${activePack.teacherBrief.coreConcepts[0] || 'the governing principle'} directly regulates this parameter.`;
+        const aiMsg: LiveChatMessage = {
+          id: `ai-${Date.now()}`,
+          senderId: 'ai-cohost',
+          senderName: 'Kaksha AI Co-Host',
+          senderRole: 'AI_COHOST',
+          text: aiReplyText,
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        };
+        setOnlineSessionState((prev) => (prev ? { ...prev, chatMessages: [...prev.chatMessages, aiMsg] } : null));
+      }, 1000);
+    }
+  };
+
+  const launchLivePoll = (question: string, options: string[], correctAnswer?: string) => {
+    if (!onlineSession) return;
+    const newPoll: LivePollState = {
+      id: `poll-${Date.now()}`,
+      question,
+      options,
+      correctAnswer,
+      votes: { 0: 1, 1: 3, 2: 0, 3: 0 },
+      totalVotes: 4,
+      isActive: true,
+    };
+    const updated = { ...onlineSession, activePoll: newPoll };
+    setOnlineSessionState(updated);
+  };
+
+  const voteInPoll = (optionIndex: number) => {
+    if (!onlineSession || !onlineSession.activePoll) return;
+    const poll = onlineSession.activePoll;
+    if (poll.userVotedIndex !== undefined) return;
+    const newVotes = {
+      ...poll.votes,
+      [optionIndex]: (poll.votes[optionIndex] || 0) + 1,
+    };
+    const updatedPoll: LivePollState = {
+      ...poll,
+      votes: newVotes,
+      totalVotes: poll.totalVotes + 1,
+      userVotedIndex: optionIndex,
+    };
+    setOnlineSessionState({ ...onlineSession, activePoll: updatedPoll });
+  };
+
+  const toggleHandRaise = (studentId: string) => {
+    if (!onlineSession) return;
+    const updatedParticipants = onlineSession.participants.map((p) =>
+      p.id === studentId ? { ...p, isHandRaised: !p.isHandRaised } : p
+    );
+    setOnlineSessionState({ ...onlineSession, participants: updatedParticipants });
+  };
+
   const resetToDemo = () => {
     setActivePackState(demoClassroomPack);
     setPacksListState([demoClassroomPack]);
     setAnalyticsState(mockClassAnalytics);
     setSubmissionsState([]);
+    setOnlineSessionState(null);
     if (typeof window !== 'undefined') {
       localStorage.setItem(STORAGE_KEYS.ACTIVE_PACK, JSON.stringify(demoClassroomPack));
       localStorage.setItem(STORAGE_KEYS.PACKS_LIST, JSON.stringify([demoClassroomPack]));
       localStorage.setItem(STORAGE_KEYS.ANALYTICS, JSON.stringify(mockClassAnalytics));
       localStorage.setItem(STORAGE_KEYS.QUIZ_SUBMISSIONS, JSON.stringify([]));
+      localStorage.removeItem(STORAGE_KEYS.ONLINE_SESSION);
     }
   };
 
@@ -174,5 +386,14 @@ export function useKakshaStore() {
     apiKey,
     setApiKey,
     resetToDemo,
+    onlineSession,
+    isOnlineClassActive: !!onlineSession?.isLive,
+    startOnlineClass,
+    endOnlineClass,
+    setOnlineSlide,
+    sendOnlineChatMessage,
+    launchLivePoll,
+    voteInPoll,
+    toggleHandRaise,
   };
 }
